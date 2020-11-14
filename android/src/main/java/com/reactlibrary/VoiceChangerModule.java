@@ -209,26 +209,19 @@ public class VoiceChangerModule extends ReactContextBaseJavaModule {
         }
 
         mNameExportVoice = String.format(FORMAT_NAME_VOICE, String.valueOf(System.currentTimeMillis() / 1000));
-        showDialogEnterName(new IDBCallback() {
-            @Override
-            public void onAction() {
-                if (mDBMedia != null) {
-                    startSaveEffect(mEffectObject, new IDBCallback() {
-                        @Override
-                        public void onAction() {
+        if (mDBMedia != null) {
+            startSaveEffect(mEffectObject, new IDBCallback() {
+                @Override
+                public void onAction() {
 
-                            final File mOutPutFile = new File(outputDir, mNameExportVoice);
-                            if (mOutPutFile.exists() && mOutPutFile.isFile()) {
-                                String mInfoSave = String.format("Your voice path is %1$s", mOutPutFile.getAbsolutePath());
-                                showToast(mInfoSave);
-                                promise.resolve(mOutPutFile.getAbsolutePath());
-                            }
-                        }
-                    });
-
+                    final File mOutPutFile = new File(outputDir, mNameExportVoice);
+                    if (mOutPutFile.exists() && mOutPutFile.isFile()) {
+                        String mInfoSave = String.format("Your voice path is %1$s", mOutPutFile.getAbsolutePath());
+                        promise.resolve(mOutPutFile.getAbsolutePath());
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     private void startSaveEffect(final EffectObject mEffectObject, final IDBCallback mDBCallback) {
